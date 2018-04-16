@@ -3,8 +3,21 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
+  context: __dirname,
+  entry: {
+    filename: './src/scripts/index.js'
+  },
+  output: {
+    path: __dirname + '/dist',
+    publicPath: '',
+    filename: 'scripts/bundle.js'
+  },
   module: {
     rules: [
+      {
+        test: /\.pug$/,
+        loader: 'pug-loader'
+      },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -43,8 +56,10 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: path.resolve(__dirname, 'src', 'index.html'),
-      filename: './index.html'
+      filename: 'index.html',
+      inject: 'body',
+      minimize: false,
+      template: path.resolve(__dirname, 'views', 'index.pug')
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
