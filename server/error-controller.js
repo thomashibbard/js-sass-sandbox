@@ -1,7 +1,12 @@
 const chalk = require('chalk')
 
 const logError = (error, req, res, next) => {
-  console.log(chalk.red('ERR_API', req.method, error.stack))
+  // console.log('here in error', error.stack)
+  const logDetails = Object.assign({}, error.details, {
+    httpMethod: req.method,
+    originalUrl: req.originalUrl
+  })
+  console.log(chalk.red('ERR_API', JSON.stringify(logDetails)))
   next(error)
 }
 

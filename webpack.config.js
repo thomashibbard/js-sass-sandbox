@@ -58,6 +58,7 @@ module.exports = {
     new HtmlWebPackPlugin({
       filename: 'index.html',
       inject: 'body',
+      favicon: false,
       minimize: false,
       template: path.resolve(__dirname, 'views', 'index.pug')
     }),
