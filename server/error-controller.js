@@ -1,7 +1,6 @@
 const chalk = require('chalk')
 
 const logError = (error, req, res, next) => {
-  // console.log('here in error', error.stack)
   const logDetails = Object.assign({}, error.details, {
     httpMethod: req.method,
     originalUrl: req.originalUrl
