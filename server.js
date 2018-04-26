@@ -17,8 +17,9 @@ const MemoryFS = require('memory-fs')
 const fs = require('fs')
 // const App = require('client/App').default
 const Root = require('components/Root').default
-const Authenticated = require('components/Authenticated/Authenticated').default
-const UnAuthenticated = require('components/UnAuthenticated/UnAuthenticated')
+const AuthenticatedComponent = require('components/Authenticated/Authenticated')
+  .default
+const UnAuthenticatedComponent = require('components/UnAuthenticated/UnAuthenticated')
   .default
 
 const server = express()
@@ -28,7 +29,7 @@ const baseTemplateAuthenticated = fs.readFileSync(
   'utf8'
 )
 const baseTemplateUnAuthenticated = fs.readFileSync(
-  path.resolve(process.cwd(), 'dist', 'index.html'),
+  path.resolve(process.cwd(), 'dist', 'index-unauth.html'),
   'utf8'
 )
 
@@ -41,13 +42,32 @@ server.use('/css', express.static(path.resolve(process.cwd(), 'dist', 'css')))
 
 server.get('/', (request, response, next) => {
   if (process.env.NODE_ENV === 'production') {
-    const template = _.template(baseTemplate)
+    const isAuth = Math.random() >= 0.5
+
+    const calculatedTemplate = isAuth
+      ? baseTemplateAuthenticated
+      : baseTemplateUnAuthenticated
+
+    const AuthenticationAwareChild = isAuth
+      ? AuthenticatedComponent
+      : UnAuthenticatedComponent
+
+    const templateFunc = _.template(calculatedTemplate)
 
     const html = ReactDOMServer.renderToString(
-      React.createElement(Root, null, React.createElement(Authenticated))
+      React.createElement(
+        'div',
+        null,
+        React.createElement(
+          Root,
+          null,
+          React.createElement(AuthenticationAwareChild)
+        )
+      )
     )
 
-    const compiledHTML = template({ html })
+    const compiledHTML = templateFunc({ html })
+    console.log(compiledHTML)
     response.header(
       'Cache-Control',
       'private, no-cache, no-store, must-revalidate'

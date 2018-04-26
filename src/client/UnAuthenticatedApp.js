@@ -2,10 +2,15 @@ import React, { Component } from 'react'
 
 import UnAuthenticated from './components/UnAuthenticated/UnAuthenticated'
 
-class App extends Component {
+class UnAuthenticatedApp extends Component {
   render() {
-    return <UnAuthenticated />
+    return (
+      <div>
+        {' '}
+        HEY WE ARE SORRY<UnAuthenticated />
+      </div>
+    )
   }
 }
 
-export default App
+export default UnAuthenticatedApp

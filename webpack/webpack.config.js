@@ -8,7 +8,7 @@ module.exports = {
   context: __dirname,
   entry: {
     bundle: path.resolve(process.cwd(), 'src', 'client', 'App.js'),
-    unauth: path.resolve(
+    bundleUnAuth: path.resolve(
       process.cwd(),
       'src',
       'client',
@@ -75,6 +75,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      filename: 'index.html',
       title: 'AUTH',
       inject: false,
       // Load a custom template (lodash by default see the FAQ for details)
@@ -88,6 +89,7 @@ module.exports = {
       }
     }),
     new HtmlWebpackPlugin({
+      filename: 'index-unauth.html',
       title: 'UN AUTH',
       inject: false,
       // Load a custom template (lodash by default see the FAQ for details)
@@ -114,6 +116,7 @@ module.exports = {
   ],
   devServer: {
     // historyApiFallback: true,
+    contentBase: path.resolve(process.cwd(), 'dist', 'authed-template.html'),
     stats: 'errors-only',
     disableHostCheck: true,
     port: 5000,
