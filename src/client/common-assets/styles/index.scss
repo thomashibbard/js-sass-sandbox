@@ -1,0 +1,24 @@
+body {
+  background-color: lighten(#1f1a1a, 15%);
+  font: 1rem/75% Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 30px 40px;
+}
+
+.container {
+  align-items: center;
+  padding: 1rem 2.5rem 5rem;
+
+  .header {
+    color: NavajoWhite;
+  }
+
+  .subhead {
+    font-weight: 100;
+    color: lighten(Goldenrod, 10%);
+  }
+}
+
+.norm {
+  height: 250px;
+}
